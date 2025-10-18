@@ -6,6 +6,9 @@ import { Badge } from '@/components/ui/badge';
 import Icon from '@/components/ui/icon';
 import { Progress } from '@/components/ui/progress';
 import { recipes } from '@/data/recipes';
+import RatingStars from '@/components/RatingStars';
+import RatingDialog from '@/components/RatingDialog';
+import { useToast } from '@/hooks/use-toast';
 
 const Recipe = () => {
   const [searchParams] = useSearchParams();
@@ -16,11 +19,20 @@ const Recipe = () => {
   const [servings, setServings] = useState(recipe?.servings || 4);
   const [isFavorite, setIsFavorite] = useState(false);
   const [completedSteps, setCompletedSteps] = useState<number[]>([]);
+  const [showRatingDialog, setShowRatingDialog] = useState(false);
+  const [currentRating, setCurrentRating] = useState(0);
+  const [ratingsCount, setRatingsCount] = useState(0);
+  const { toast } = useToast();
 
   useEffect(() => {
     const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
     setIsFavorite(favorites.includes(recipeId));
-  }, [recipeId]);
+
+    const ratings = JSON.parse(localStorage.getItem('ratings') || '{}');
+    const recipeRatings = ratings[recipeId] || { total: 0, count: 0 };
+    setCurrentRating(recipeRatings.count > 0 ? recipeRatings.total / recipeRatings.count : recipe?.rating || 8.5);
+    setRatingsCount(recipeRatings.count);
+  }, [recipeId, recipe]);
 
   if (!recipe) {
     return (
@@ -67,6 +79,25 @@ const Recipe = () => {
 
   const progress = (completedSteps.length / recipe.steps.length) * 100;
 
+  const handleRatingSubmit = (rating: number) => {
+    const ratings = JSON.parse(localStorage.getItem('ratings') || '{}');
+    const recipeRatings = ratings[recipeId] || { total: 0, count: 0 };
+    
+    recipeRatings.total += rating;
+    recipeRatings.count += 1;
+    
+    ratings[recipeId] = recipeRatings;
+    localStorage.setItem('ratings', JSON.stringify(ratings));
+    
+    setCurrentRating(recipeRatings.total / recipeRatings.count);
+    setRatingsCount(recipeRatings.count);
+    
+    toast({
+      title: 'Спасибо за оценку!',
+      description: `Вы поставили ${rating}/10 для этого рецепта`,
+    });
+  };
+
   return (
     <div className="min-h-screen bg-background">
       <header className="bg-white border-b border-border sticky top-0 z-10 shadow-sm">
@@ -111,7 +142,7 @@ const Recipe = () => {
 
             <Card>
               <CardHeader>
-                <div className="flex items-center justify-between">
+                <div className="flex items-center justify-between mb-4">
                   <CardTitle className="text-2xl">Информация</CardTitle>
                   <div className="flex gap-2">
                     <Badge variant="secondary" className="flex items-center gap-1">
@@ -120,6 +151,21 @@ const Recipe = () => {
                     </Badge>
                     <Badge variant="outline">{recipe.difficulty}</Badge>
                     <Badge>{recipe.category}</Badge>
+                  </div>
+                </div>
+                <div className="border-t pt-4">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="text-sm text-muted-foreground mb-2">Рейтинг рецепта</p>
+                      <RatingStars rating={currentRating} readonly size={24} />
+                      <p className="text-sm text-muted-foreground mt-2">
+                        {ratingsCount > 0 ? `${ratingsCount} ${ratingsCount === 1 ? 'оценка' : ratingsCount < 5 ? 'оценки' : 'оценок'}` : 'Нет оценок'}
+                      </p>
+                    </div>
+                    <Button onClick={() => setShowRatingDialog(true)} className="flex items-center gap-2">
+                      <Icon name="Star" size={16} />
+                      Оценить рецепт
+                    </Button>
                   </div>
                 </div>
               </CardHeader>
@@ -267,6 +313,13 @@ const Recipe = () => {
           </CardContent>
         </Card>
       </div>
+
+      <RatingDialog
+        open={showRatingDialog}
+        onOpenChange={setShowRatingDialog}
+        onSubmit={handleRatingSubmit}
+        recipeName={recipe.title}
+      />
     </div>
   );
 };

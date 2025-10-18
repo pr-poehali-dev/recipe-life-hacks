@@ -10,6 +10,8 @@ export interface Recipe {
   category: string;
   steps: string[];
   tips?: string;
+  rating?: number;
+  ratingsCount?: number;
 }
 
 export const recipes: Recipe[] = [

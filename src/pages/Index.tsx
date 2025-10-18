@@ -7,6 +7,7 @@ import Icon from '@/components/ui/icon';
 import { Input } from '@/components/ui/input';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { recipes, Recipe } from '@/data/recipes';
+import RatingStars from '@/components/RatingStars';
 
 interface Tip {
   id: number;
@@ -97,6 +98,11 @@ const Index = () => {
 
   const RecipeCard = ({ recipe }: { recipe: Recipe }) => {
     const currentServings = getAdjustedServings(recipe.id, recipe.servings);
+    
+    const ratings = JSON.parse(localStorage.getItem('ratings') || '{}');
+    const recipeRatings = ratings[recipe.id] || { total: 0, count: 0 };
+    const recipeRating = recipeRatings.count > 0 ? recipeRatings.total / recipeRatings.count : recipe.rating || 8.5;
+    
     return (
       <Card className="overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
         <div className="relative h-48 overflow-hidden cursor-pointer" onClick={() => navigate(`/recipe?id=${recipe.id}`)}>
@@ -126,13 +132,16 @@ const Index = () => {
             <CardTitle className="text-xl">{recipe.title}</CardTitle>
           </div>
           <CardDescription className="text-base">{recipe.description}</CardDescription>
-          <div className="flex gap-2 mt-3 flex-wrap">
-            <Badge variant="secondary" className="flex items-center gap-1">
-              <Icon name="Clock" size={14} />
-              {recipe.time}
-            </Badge>
-            <Badge variant="outline">{recipe.difficulty}</Badge>
-            <Badge>{recipe.category}</Badge>
+          <div className="mt-3 space-y-2">
+            <div className="flex gap-2 flex-wrap">
+              <Badge variant="secondary" className="flex items-center gap-1">
+                <Icon name="Clock" size={14} />
+                {recipe.time}
+              </Badge>
+              <Badge variant="outline">{recipe.difficulty}</Badge>
+              <Badge>{recipe.category}</Badge>
+            </div>
+            <RatingStars rating={recipeRating} readonly size={16} showNumber={false} />
           </div>
         </CardHeader>
         <CardContent>
