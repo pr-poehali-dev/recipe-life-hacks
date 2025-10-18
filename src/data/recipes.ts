@@ -84,7 +84,7 @@ export const recipes: Recipe[] = [
     time: '2 часа',
     servings: 6,
     difficulty: 'Средне',
-    image: 'https://cdn.poehali.dev/projects/bbb1e7ad-24f7-4a07-8f8d-872eb3ea8082/files/b95d3fb3-6308-4838-8f91-0bbf38816b10.jpg',
+    image: 'https://cdn.poehali.dev/projects/bbb1e7ad-24f7-4a07-8f8d-872eb3ea8082/files/8320a2fe-beb3-4c2f-b53a-504df6895de3.jpg',
     ingredients: ['500г говядины', '3 свеклы', '2 моркови', '1 луковица', '3 картофелины', '300г капусты', 'Томатная паста', 'Чеснок', 'Сметана'],
     category: 'Суп',
     steps: [
@@ -106,7 +106,7 @@ export const recipes: Recipe[] = [
     time: '20 мин',
     servings: 4,
     difficulty: 'Легко',
-    image: 'https://cdn.poehali.dev/projects/bbb1e7ad-24f7-4a07-8f8d-872eb3ea8082/files/ac7feda3-5fbd-4f5c-bdc3-0d4c86116fd2.jpg',
+    image: 'https://cdn.poehali.dev/projects/bbb1e7ad-24f7-4a07-8f8d-872eb3ea8082/files/3cac356b-bd0c-423c-b273-167edc96386a.jpg',
     ingredients: ['250г муки', '2 яйца', '300мл молока', '2ст.л. сахара', '1ч.л. разрыхлителя', 'Щепотка соли', 'Масло для жарки'],
     category: 'Завтрак',
     steps: [
@@ -127,7 +127,7 @@ export const recipes: Recipe[] = [
     time: '1 час',
     servings: 4,
     difficulty: 'Легко',
-    image: 'https://cdn.poehali.dev/projects/bbb1e7ad-24f7-4a07-8f8d-872eb3ea8082/files/b95d3fb3-6308-4838-8f91-0bbf38816b10.jpg',
+    image: 'https://cdn.poehali.dev/projects/bbb1e7ad-24f7-4a07-8f8d-872eb3ea8082/files/83413a72-86d9-4ef3-b6d2-2e834e6094a7.jpg',
     ingredients: ['500г курицы', '2 моркови', '1 луковица', '3 картофелины', '150г лапши', 'Лавровый лист', 'Зелень'],
     category: 'Суп',
     steps: [
@@ -148,7 +148,7 @@ export const recipes: Recipe[] = [
     time: '15 мин',
     servings: 4,
     difficulty: 'Легко',
-    image: 'https://cdn.poehali.dev/projects/bbb1e7ad-24f7-4a07-8f8d-872eb3ea8082/files/0ecb1933-51f8-4cc0-9c58-4aa3a3846a72.jpg',
+    image: 'https://cdn.poehali.dev/projects/bbb1e7ad-24f7-4a07-8f8d-872eb3ea8082/files/1be732c0-4353-48ab-a87e-b73e6102e2d1.jpg',
     ingredients: ['3 помидора', '1 огурец', '1 перец', '1 красная луковица', '200г феты', '100г маслин', 'Оливковое масло', 'Орегано'],
     category: 'Салат',
     steps: [
@@ -169,7 +169,7 @@ export const recipes: Recipe[] = [
     time: '1.5 часа',
     servings: 6,
     difficulty: 'Сложно',
-    image: 'https://cdn.poehali.dev/projects/bbb1e7ad-24f7-4a07-8f8d-872eb3ea8082/files/b95d3fb3-6308-4838-8f91-0bbf38816b10.jpg',
+    image: 'https://cdn.poehali.dev/projects/bbb1e7ad-24f7-4a07-8f8d-872eb3ea8082/files/89618c34-3fd5-40c7-a256-473930d65b52.jpg',
     ingredients: ['500г фарша', '1 луковица', '2 моркови', '400г томатов', 'Листы лазаньи', 'Молоко 500мл', 'Мука 50г', 'Масло 50г', 'Пармезан', 'Моцарелла'],
     category: 'Основное блюдо',
     steps: [
@@ -190,7 +190,7 @@ export const recipes: Recipe[] = [
     time: '6 часов',
     servings: 12,
     difficulty: 'Сложно',
-    image: 'https://cdn.poehali.dev/projects/bbb1e7ad-24f7-4a07-8f8d-872eb3ea8082/files/ac7feda3-5fbd-4f5c-bdc3-0d4c86116fd2.jpg',
+    image: 'https://cdn.poehali.dev/projects/bbb1e7ad-24f7-4a07-8f8d-872eb3ea8082/files/66a1e9ab-bb1e-47bc-bdd8-24a60d77d051.jpg',
     ingredients: ['200г печенья', '100г масла', '800г крем-сыра', '200г сахара', '3 яйца', '200мл сливок', 'Ванильный экстракт', 'Лимонная цедра'],
     category: 'Десерт',
     steps: [
@@ -212,7 +212,7 @@ export const recipes: Recipe[] = [
     time: '40 мин',
     servings: 4,
     difficulty: 'Средне',
-    image: 'https://cdn.poehali.dev/projects/bbb1e7ad-24f7-4a07-8f8d-872eb3ea8082/files/b95d3fb3-6308-4838-8f91-0bbf38816b10.jpg',
+    image: 'https://cdn.poehali.dev/projects/bbb1e7ad-24f7-4a07-8f8d-872eb3ea8082/files/a18417b8-22fb-4418-aac3-ffc6b826c013.jpg',
     ingredients: ['300г риса Арборио', '300г грибов', '1 луковица', '1л бульона', '100мл белого вина', '50г пармезана', 'Масло сливочное'],
     category: 'Основное блюдо',
     steps: [
@@ -233,7 +233,7 @@ export const recipes: Recipe[] = [
     time: '30 мин',
     servings: 4,
     difficulty: 'Легко',
-    image: 'https://cdn.poehali.dev/projects/bbb1e7ad-24f7-4a07-8f8d-872eb3ea8082/files/ac7feda3-5fbd-4f5c-bdc3-0d4c86116fd2.jpg',
+    image: 'https://cdn.poehali.dev/projects/bbb1e7ad-24f7-4a07-8f8d-872eb3ea8082/files/df7ccd2d-9665-46e7-9ee1-0df05a7227bd.jpg',
     ingredients: ['300г муки', '2 яйца', '500мл молока', '2ст.л. сахара', 'Щепотка соли', '3ст.л. растительного масла'],
     category: 'Завтрак',
     steps: [
@@ -254,7 +254,7 @@ export const recipes: Recipe[] = [
     time: '25 мин',
     servings: 4,
     difficulty: 'Средне',
-    image: 'https://cdn.poehali.dev/projects/bbb1e7ad-24f7-4a07-8f8d-872eb3ea8082/files/0ecb1933-51f8-4cc0-9c58-4aa3a3846a72.jpg',
+    image: 'https://cdn.poehali.dev/projects/bbb1e7ad-24f7-4a07-8f8d-872eb3ea8082/files/51fdcc55-30bc-4219-b17a-126f4248ea07.jpg',
     ingredients: ['400г куриной грудки', '1 кочан салата Романо', '100г пармезана', 'Белый хлеб', 'Майонез 150г', 'Чеснок 2 зубчика', 'Лимонный сок', 'Анчоусы'],
     category: 'Салат',
     steps: [
@@ -275,7 +275,7 @@ export const recipes: Recipe[] = [
     time: '4 часа',
     servings: 8,
     difficulty: 'Средне',
-    image: 'https://cdn.poehali.dev/projects/bbb1e7ad-24f7-4a07-8f8d-872eb3ea8082/files/ac7feda3-5fbd-4f5c-bdc3-0d4c86116fd2.jpg',
+    image: 'https://cdn.poehali.dev/projects/bbb1e7ad-24f7-4a07-8f8d-872eb3ea8082/files/70324f09-01bc-4a54-961f-128ae5003ee0.jpg',
     ingredients: ['500г маскарпоне', '4 яйца', '100г сахара', '300мл крепкого кофе', 'Печенье Савоярди', 'Какао-порошок', 'Амаретто 50мл'],
     category: 'Десерт',
     steps: [
@@ -298,7 +298,7 @@ export const recipes: Recipe[] = [
     time: '30 мин',
     servings: 4,
     difficulty: 'Средне',
-    image: 'https://cdn.poehali.dev/projects/bbb1e7ad-24f7-4a07-8f8d-872eb3ea8082/files/b95d3fb3-6308-4838-8f91-0bbf38816b10.jpg',
+    image: 'https://cdn.poehali.dev/projects/bbb1e7ad-24f7-4a07-8f8d-872eb3ea8082/files/4c937886-2ea8-463b-91bf-9a5ff0072642.jpg',
     ingredients: ['300г креветок', '200г шампиньонов', '2 помидора', 'Лемонграсс', 'Галангал', 'Листья лайма', 'Паста том ям', 'Кокосовое молоко', 'Рыбный соус'],
     category: 'Суп',
     steps: [
@@ -319,7 +319,7 @@ export const recipes: Recipe[] = [
     time: '3 часа',
     servings: 4,
     difficulty: 'Сложно',
-    image: 'https://cdn.poehali.dev/projects/bbb1e7ad-24f7-4a07-8f8d-872eb3ea8082/files/b95d3fb3-6308-4838-8f91-0bbf38816b10.jpg',
+    image: 'https://cdn.poehali.dev/projects/bbb1e7ad-24f7-4a07-8f8d-872eb3ea8082/files/f1739d9f-e72e-48d9-b45e-16cf1f88350a.jpg',
     ingredients: ['1 утка 2кг', 'Мёд 3ст.л.', 'Соевый соус', 'Рисовый уксус', 'Имбирь', 'Блинчики', 'Огурец', 'Зелёный лук', 'Соус хойсин'],
     category: 'Основное блюдо',
     steps: [
@@ -341,7 +341,7 @@ export const recipes: Recipe[] = [
     time: '2 часа',
     servings: 4,
     difficulty: 'Средне',
-    image: 'https://cdn.poehali.dev/projects/bbb1e7ad-24f7-4a07-8f8d-872eb3ea8082/files/ac7feda3-5fbd-4f5c-bdc3-0d4c86116fd2.jpg',
+    image: 'https://cdn.poehali.dev/projects/bbb1e7ad-24f7-4a07-8f8d-872eb3ea8082/files/cfac5241-75e5-49ce-be9a-c173d56444b4.jpg',
     ingredients: ['500г муки', '250мл кефира', '1ч.л. сахара', '1ч.л. соли', '7г дрожжей', '400г сулугуни', '4 яйца', 'Масло сливочное'],
     category: 'Выпечка',
     steps: [
@@ -364,7 +364,7 @@ export const recipes: Recipe[] = [
     time: '15 мин',
     servings: 4,
     difficulty: 'Легко',
-    image: 'https://cdn.poehali.dev/projects/bbb1e7ad-24f7-4a07-8f8d-872eb3ea8082/files/0ecb1933-51f8-4cc0-9c58-4aa3a3846a72.jpg',
+    image: 'https://cdn.poehali.dev/projects/bbb1e7ad-24f7-4a07-8f8d-872eb3ea8082/files/87710ea5-5180-46e7-bbea-e5d54c3e9478.jpg',
     ingredients: ['1кг помидоров', '1 огурец', '1 перец', '1 зубчик чеснока', 'Белый хлеб 100г', 'Оливковое масло', 'Винный уксус', 'Соль'],
     category: 'Суп',
     steps: [
@@ -386,7 +386,7 @@ export const recipes: Recipe[] = [
     time: '25 мин',
     servings: 4,
     difficulty: 'Легко',
-    image: 'https://cdn.poehali.dev/projects/bbb1e7ad-24f7-4a07-8f8d-872eb3ea8082/files/b95d3fb3-6308-4838-8f91-0bbf38816b10.jpg',
+    image: 'https://cdn.poehali.dev/projects/bbb1e7ad-24f7-4a07-8f8d-872eb3ea8082/files/e18ef147-5485-42d7-a475-391a8ec1782b.jpg',
     ingredients: ['4 яйца', '1 луковица', '2 перца', '800г томатов', 'Чеснок 3 зубчика', 'Паприка', 'Кумин', 'Петрушка', 'Фета'],
     category: 'Завтрак',
     steps: [
@@ -408,7 +408,7 @@ export const recipes: Recipe[] = [
     time: '1 час',
     servings: 4,
     difficulty: 'Средне',
-    image: 'https://cdn.poehali.dev/projects/bbb1e7ad-24f7-4a07-8f8d-872eb3ea8082/files/0ecb1933-51f8-4cc0-9c58-4aa3a3846a72.jpg',
+    image: 'https://cdn.poehali.dev/projects/bbb1e7ad-24f7-4a07-8f8d-872eb3ea8082/files/af0e090f-673e-49e3-8622-cd24306d8b5e.jpg',
     ingredients: ['2 баклажана', '2 кабачка', '4 помидора', '1 перец', '1 луковица', 'Чеснок', 'Прованские травы', 'Оливковое масло'],
     category: 'Основное блюдо',
     steps: [
@@ -430,7 +430,7 @@ export const recipes: Recipe[] = [
     time: '20 мин',
     servings: 2,
     difficulty: 'Средне',
-    image: 'https://cdn.poehali.dev/projects/bbb1e7ad-24f7-4a07-8f8d-872eb3ea8082/files/b95d3fb3-6308-4838-8f91-0bbf38816b10.jpg',
+    image: 'https://cdn.poehali.dev/projects/bbb1e7ad-24f7-4a07-8f8d-872eb3ea8082/files/e0d64d19-1720-4796-9b90-e9a3a4860dc2.jpg',
     ingredients: ['200г рисовой лапши', '200г креветок', '2 яйца', 'Ростки сои', 'Зелёный лук', 'Арахис', 'Лайм', 'Рыбный соус', 'Тамаринд', 'Пальмовый сахар'],
     category: 'Основное блюдо',
     steps: [
@@ -452,7 +452,7 @@ export const recipes: Recipe[] = [
     time: '3 часа',
     servings: 10,
     difficulty: 'Средне',
-    image: 'https://cdn.poehali.dev/projects/bbb1e7ad-24f7-4a07-8f8d-872eb3ea8082/files/ac7feda3-5fbd-4f5c-bdc3-0d4c86116fd2.jpg',
+    image: 'https://cdn.poehali.dev/projects/bbb1e7ad-24f7-4a07-8f8d-872eb3ea8082/files/f6487a86-270b-4060-bf34-5e0fac850225.jpg',
     ingredients: ['3 яйца', '150г сахара', '100г мёда', '1ч.л. соды', '400г муки', '800г сметаны', '300г сахара для крема'],
     category: 'Десерт',
     steps: [
@@ -474,7 +474,7 @@ export const recipes: Recipe[] = [
     time: '12 часов',
     servings: 4,
     difficulty: 'Средне',
-    image: 'https://cdn.poehali.dev/projects/bbb1e7ad-24f7-4a07-8f8d-872eb3ea8082/files/0ecb1933-51f8-4cc0-9c58-4aa3a3846a72.jpg',
+    image: 'https://cdn.poehali.dev/projects/bbb1e7ad-24f7-4a07-8f8d-872eb3ea8082/files/7dc09eed-8bd3-4249-9d64-5a2d3cb71fae.jpg',
     ingredients: ['400г нута', '1 луковица', 'Чеснок 4 зубчика', 'Петрушка', 'Кинза', 'Кумин', 'Кориандр', 'Разрыхлитель', 'Кунжут'],
     category: 'Основное блюдо',
     steps: [
@@ -496,7 +496,7 @@ export const recipes: Recipe[] = [
     time: '30 мин',
     servings: 4,
     difficulty: 'Легко',
-    image: 'https://cdn.poehali.dev/projects/bbb1e7ad-24f7-4a07-8f8d-872eb3ea8082/files/b95d3fb3-6308-4838-8f91-0bbf38816b10.jpg',
+    image: 'https://cdn.poehali.dev/projects/bbb1e7ad-24f7-4a07-8f8d-872eb3ea8082/files/c96d1c74-4e02-4c89-bc56-a7d72f55cb06.jpg',
     ingredients: ['500г брокколи', '2 картофелины', '1 луковица', '1л бульона', '200мл сливок', 'Чеснок', 'Сухарики'],
     category: 'Суп',
     steps: [
