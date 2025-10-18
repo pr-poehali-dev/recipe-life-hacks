@@ -1,22 +1,12 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import Icon from '@/components/ui/icon';
 import { Input } from '@/components/ui/input';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-
-interface Recipe {
-  id: number;
-  title: string;
-  description: string;
-  time: string;
-  servings: number;
-  difficulty: string;
-  image: string;
-  ingredients: string[];
-  category: string;
-}
+import { recipes, Recipe } from '@/data/recipes';
 
 interface Tip {
   id: number;
@@ -26,44 +16,16 @@ interface Tip {
 }
 
 const Index = () => {
+  const navigate = useNavigate();
   const [favorites, setFavorites] = useState<number[]>([]);
   const [servingsMultiplier, setServingsMultiplier] = useState<{ [key: number]: number }>({});
+  const [searchQuery, setSearchQuery] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState('all');
 
-  const recipes: Recipe[] = [
-    {
-      id: 1,
-      title: 'Домашняя паста Карбонара',
-      description: 'Классическая итальянская паста с беконом, яйцами и сыром пармезан',
-      time: '25 мин',
-      servings: 4,
-      difficulty: 'Средне',
-      image: 'https://cdn.poehali.dev/projects/bbb1e7ad-24f7-4a07-8f8d-872eb3ea8082/files/b95d3fb3-6308-4838-8f91-0bbf38816b10.jpg',
-      ingredients: ['400г спагетти', '200г бекона', '4 яйца', '100г пармезана', 'Соль, перец'],
-      category: 'Основное блюдо'
-    },
-    {
-      id: 2,
-      title: 'Свежий хлеб на закваске',
-      description: 'Ароматный хлеб с хрустящей корочкой, приготовленный на домашней закваске',
-      time: '4 часа',
-      servings: 8,
-      difficulty: 'Сложно',
-      image: 'https://cdn.poehali.dev/projects/bbb1e7ad-24f7-4a07-8f8d-872eb3ea8082/files/ac7feda3-5fbd-4f5c-bdc3-0d4c86116fd2.jpg',
-      ingredients: ['500г муки', '350мл воды', '100г закваски', '10г соли'],
-      category: 'Выпечка'
-    },
-    {
-      id: 3,
-      title: 'Овощной салат с киноа',
-      description: 'Полезный и сытный салат с киноа, свежими овощами и заправкой',
-      time: '20 мин',
-      servings: 2,
-      difficulty: 'Легко',
-      image: 'https://cdn.poehali.dev/projects/bbb1e7ad-24f7-4a07-8f8d-872eb3ea8082/files/0ecb1933-51f8-4cc0-9c58-4aa3a3846a72.jpg',
-      ingredients: ['200г киноа', '1 огурец', '2 помидора', '1 перец', 'Оливковое масло'],
-      category: 'Салат'
-    }
-  ];
+  useEffect(() => {
+    const storedFavorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+    setFavorites(storedFavorites);
+  }, []);
 
   const tips: Tip[] = [
     {
@@ -87,9 +49,11 @@ const Index = () => {
   ];
 
   const toggleFavorite = (id: number) => {
-    setFavorites(prev =>
-      prev.includes(id) ? prev.filter(fav => fav !== id) : [...prev, id]
-    );
+    const newFavorites = favorites.includes(id)
+      ? favorites.filter(fav => fav !== id)
+      : [...favorites, id];
+    setFavorites(newFavorites);
+    localStorage.setItem('favorites', JSON.stringify(newFavorites));
   };
 
   const getAdjustedServings = (recipeId: number, baseServings: number) => {
@@ -115,6 +79,117 @@ const Index = () => {
     return ingredient;
   };
 
+  const filteredRecipes = recipes.filter(recipe => {
+    const matchesSearch = searchQuery === '' || 
+      recipe.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      recipe.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      recipe.ingredients.some(ing => ing.toLowerCase().includes(searchQuery.toLowerCase()));
+    
+    const matchesCategory = selectedCategory === 'all' || 
+      (selectedCategory === 'main' && recipe.category === 'Основное блюдо') ||
+      (selectedCategory === 'baking' && (recipe.category === 'Выпечка' || recipe.category === 'Десерт')) ||
+      (selectedCategory === 'salads' && recipe.category === 'Салат') ||
+      (selectedCategory === 'soups' && recipe.category === 'Суп') ||
+      (selectedCategory === 'breakfast' && recipe.category === 'Завтрак');
+    
+    return matchesSearch && matchesCategory;
+  });
+
+  const RecipeCard = ({ recipe }: { recipe: Recipe }) => {
+    const currentServings = getAdjustedServings(recipe.id, recipe.servings);
+    return (
+      <Card className="overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+        <div className="relative h-48 overflow-hidden cursor-pointer" onClick={() => navigate(`/recipe?id=${recipe.id}`)}>
+          <img
+            src={recipe.image}
+            alt={recipe.title}
+            className="w-full h-full object-cover transition-transform duration-300 hover:scale-110"
+          />
+          <Button
+            variant="ghost"
+            size="icon"
+            className="absolute top-2 right-2 bg-white/90 hover:bg-white"
+            onClick={(e) => {
+              e.stopPropagation();
+              toggleFavorite(recipe.id);
+            }}
+          >
+            <Icon
+              name="Heart"
+              size={20}
+              className={favorites.includes(recipe.id) ? 'fill-red-500 text-red-500' : ''}
+            />
+          </Button>
+        </div>
+        <CardHeader className="cursor-pointer" onClick={() => navigate(`/recipe?id=${recipe.id}`)}>
+          <div className="flex items-start justify-between gap-2 mb-2">
+            <CardTitle className="text-xl">{recipe.title}</CardTitle>
+          </div>
+          <CardDescription className="text-base">{recipe.description}</CardDescription>
+          <div className="flex gap-2 mt-3 flex-wrap">
+            <Badge variant="secondary" className="flex items-center gap-1">
+              <Icon name="Clock" size={14} />
+              {recipe.time}
+            </Badge>
+            <Badge variant="outline">{recipe.difficulty}</Badge>
+            <Badge>{recipe.category}</Badge>
+          </div>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-4">
+            <div className="flex items-center gap-3 bg-muted p-3 rounded-lg">
+              <span className="text-sm font-semibold">Порций:</span>
+              <div className="flex items-center gap-2">
+                <Button
+                  size="sm"
+                  variant="outline"
+                  onClick={() => updateServings(recipe.id, currentServings - 1)}
+                >
+                  <Icon name="Minus" size={16} />
+                </Button>
+                <span className="font-bold text-lg min-w-[2ch] text-center">
+                  {currentServings}
+                </span>
+                <Button
+                  size="sm"
+                  variant="outline"
+                  onClick={() => updateServings(recipe.id, currentServings + 1)}
+                >
+                  <Icon name="Plus" size={16} />
+                </Button>
+              </div>
+            </div>
+            <div>
+              <h4 className="font-semibold mb-2 flex items-center gap-2">
+                <Icon name="ShoppingBasket" size={16} />
+                Ингредиенты:
+              </h4>
+              <ul className="space-y-1 text-sm">
+                {recipe.ingredients.slice(0, 3).map((ingredient, idx) => (
+                  <li key={idx} className="flex items-start gap-2">
+                    <span className="text-primary mt-1">•</span>
+                    <span>
+                      {getIngredientAmount(ingredient, recipe.servings, currentServings)}
+                    </span>
+                  </li>
+                ))}
+                {recipe.ingredients.length > 3 && (
+                  <li className="text-muted-foreground">
+                    + еще {recipe.ingredients.length - 3}
+                  </li>
+                )}
+              </ul>
+            </div>
+            <Button className="w-full" onClick={() => navigate(`/recipe?id=${recipe.id}`)}>
+              <Icon name="BookOpen" size={16} className="mr-2" />
+              Читать рецепт
+            </Button>
+          </div>
+        </CardContent>
+      </Card>
+    );
+  };
+
   return (
     <div className="min-h-screen bg-background">
       <header className="bg-white border-b border-border sticky top-0 z-10 shadow-sm">
@@ -127,7 +202,14 @@ const Index = () => {
             <nav className="flex gap-6">
               <Button variant="ghost" className="text-lg">Рецепты</Button>
               <Button variant="ghost" className="text-lg">Лайфхаки</Button>
-              <Button variant="ghost" className="text-lg flex items-center gap-2">
+              <Button 
+                variant="ghost" 
+                className="text-lg flex items-center gap-2"
+                onClick={() => {
+                  setSearchQuery('');
+                  setSelectedCategory('favorites');
+                }}
+              >
                 <Icon name="Heart" size={20} />
                 Избранное {favorites.length > 0 && `(${favorites.length})`}
               </Button>
@@ -144,156 +226,76 @@ const Index = () => {
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto mb-8 animate-fade-in">
             Простые и вкусные рецепты для домашней кухни. Советы от опытных кулинаров и полезные лайфхаки
           </p>
-          <Button size="lg" className="text-lg px-8 animate-scale-in">
-            <Icon name="BookOpen" size={20} className="mr-2" />
-            Смотреть рецепты
-          </Button>
+          <div className="max-w-2xl mx-auto">
+            <div className="relative">
+              <Icon name="Search" size={20} className="absolute left-4 top-1/2 transform -translate-y-1/2 text-muted-foreground" />
+              <Input
+                type="text"
+                placeholder="Поиск по названию или ингредиентам..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="pl-12 pr-4 py-6 text-lg rounded-full shadow-lg"
+              />
+            </div>
+            {searchQuery && (
+              <p className="mt-4 text-muted-foreground">
+                Найдено рецептов: {filteredRecipes.length}
+              </p>
+            )}
+          </div>
         </div>
       </section>
 
       <section className="container mx-auto px-4 py-16">
-        <Tabs defaultValue="all" className="w-full">
+        <Tabs value={selectedCategory} onValueChange={setSelectedCategory} className="w-full">
           <div className="flex items-center justify-between mb-8">
-            <h3 className="text-3xl font-bold">Популярные рецепты</h3>
+            <h3 className="text-3xl font-bold">
+              {selectedCategory === 'favorites' ? 'Избранные рецепты' : 'Все рецепты'}
+            </h3>
             <TabsList>
               <TabsTrigger value="all">Все</TabsTrigger>
               <TabsTrigger value="main">Основное</TabsTrigger>
-              <TabsTrigger value="baking">Выпечка</TabsTrigger>
+              <TabsTrigger value="soups">Супы</TabsTrigger>
               <TabsTrigger value="salads">Салаты</TabsTrigger>
+              <TabsTrigger value="baking">Выпечка</TabsTrigger>
+              <TabsTrigger value="breakfast">Завтрак</TabsTrigger>
+              <TabsTrigger value="favorites">
+                <Icon name="Heart" size={16} className="mr-1" />
+                Избранное
+              </TabsTrigger>
             </TabsList>
           </div>
 
-          <TabsContent value="all">
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {recipes.map((recipe) => {
-                const currentServings = getAdjustedServings(recipe.id, recipe.servings);
-                return (
-                  <Card key={recipe.id} className="overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-                    <div className="relative h-48 overflow-hidden">
-                      <img
-                        src={recipe.image}
-                        alt={recipe.title}
-                        className="w-full h-full object-cover transition-transform duration-300 hover:scale-110"
-                      />
-                      <Button
-                        variant="ghost"
-                        size="icon"
-                        className="absolute top-2 right-2 bg-white/90 hover:bg-white"
-                        onClick={() => toggleFavorite(recipe.id)}
-                      >
-                        <Icon
-                          name="Heart"
-                          size={20}
-                          className={favorites.includes(recipe.id) ? 'fill-red-500 text-red-500' : ''}
-                        />
-                      </Button>
-                    </div>
-                    <CardHeader>
-                      <div className="flex items-start justify-between gap-2 mb-2">
-                        <CardTitle className="text-xl">{recipe.title}</CardTitle>
-                      </div>
-                      <CardDescription className="text-base">{recipe.description}</CardDescription>
-                      <div className="flex gap-2 mt-3 flex-wrap">
-                        <Badge variant="secondary" className="flex items-center gap-1">
-                          <Icon name="Clock" size={14} />
-                          {recipe.time}
-                        </Badge>
-                        <Badge variant="outline">{recipe.difficulty}</Badge>
-                        <Badge>{recipe.category}</Badge>
-                      </div>
-                    </CardHeader>
-                    <CardContent>
-                      <div className="space-y-4">
-                        <div className="flex items-center gap-3 bg-muted p-3 rounded-lg">
-                          <span className="text-sm font-semibold">Порций:</span>
-                          <div className="flex items-center gap-2">
-                            <Button
-                              size="sm"
-                              variant="outline"
-                              onClick={() => updateServings(recipe.id, currentServings - 1)}
-                            >
-                              <Icon name="Minus" size={16} />
-                            </Button>
-                            <span className="font-bold text-lg min-w-[2ch] text-center">
-                              {currentServings}
-                            </span>
-                            <Button
-                              size="sm"
-                              variant="outline"
-                              onClick={() => updateServings(recipe.id, currentServings + 1)}
-                            >
-                              <Icon name="Plus" size={16} />
-                            </Button>
-                          </div>
-                        </div>
-                        <div>
-                          <h4 className="font-semibold mb-2 flex items-center gap-2">
-                            <Icon name="ShoppingBasket" size={16} />
-                            Ингредиенты:
-                          </h4>
-                          <ul className="space-y-1 text-sm">
-                            {recipe.ingredients.map((ingredient, idx) => (
-                              <li key={idx} className="flex items-start gap-2">
-                                <span className="text-primary mt-1">•</span>
-                                <span>
-                                  {getIngredientAmount(ingredient, recipe.servings, currentServings)}
-                                </span>
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                        <Button className="w-full">
-                          <Icon name="BookOpen" size={16} className="mr-2" />
-                          Читать рецепт
-                        </Button>
-                      </div>
-                    </CardContent>
-                  </Card>
-                );
-              })}
-            </div>
-          </TabsContent>
-
-          <TabsContent value="main">
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {recipes.filter(r => r.category === 'Основное блюдо').map((recipe) => (
-                <Card key={recipe.id} className="overflow-hidden">
-                  <img src={recipe.image} alt={recipe.title} className="w-full h-48 object-cover" />
-                  <CardHeader>
-                    <CardTitle>{recipe.title}</CardTitle>
-                    <CardDescription>{recipe.description}</CardDescription>
-                  </CardHeader>
-                </Card>
-              ))}
-            </div>
-          </TabsContent>
-
-          <TabsContent value="baking">
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {recipes.filter(r => r.category === 'Выпечка').map((recipe) => (
-                <Card key={recipe.id} className="overflow-hidden">
-                  <img src={recipe.image} alt={recipe.title} className="w-full h-48 object-cover" />
-                  <CardHeader>
-                    <CardTitle>{recipe.title}</CardTitle>
-                    <CardDescription>{recipe.description}</CardDescription>
-                  </CardHeader>
-                </Card>
-              ))}
-            </div>
-          </TabsContent>
-
-          <TabsContent value="salads">
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {recipes.filter(r => r.category === 'Салат').map((recipe) => (
-                <Card key={recipe.id} className="overflow-hidden">
-                  <img src={recipe.image} alt={recipe.title} className="w-full h-48 object-cover" />
-                  <CardHeader>
-                    <CardTitle>{recipe.title}</CardTitle>
-                    <CardDescription>{recipe.description}</CardDescription>
-                  </CardHeader>
-                </Card>
-              ))}
-            </div>
+          <TabsContent value={selectedCategory}>
+            {selectedCategory === 'favorites' ? (
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {recipes.filter(r => favorites.includes(r.id)).length === 0 ? (
+                  <div className="col-span-full text-center py-12">
+                    <Icon name="Heart" size={64} className="mx-auto text-muted-foreground mb-4" />
+                    <h3 className="text-2xl font-bold mb-2">Избранное пусто</h3>
+                    <p className="text-muted-foreground">Добавьте рецепты в избранное, нажав на сердечко</p>
+                  </div>
+                ) : (
+                  recipes.filter(r => favorites.includes(r.id)).map(recipe => (
+                    <RecipeCard key={recipe.id} recipe={recipe} />
+                  ))
+                )}
+              </div>
+            ) : (
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {filteredRecipes.length === 0 ? (
+                  <div className="col-span-full text-center py-12">
+                    <Icon name="Search" size={64} className="mx-auto text-muted-foreground mb-4" />
+                    <h3 className="text-2xl font-bold mb-2">Ничего не найдено</h3>
+                    <p className="text-muted-foreground">Попробуйте изменить запрос или выбрать другую категорию</p>
+                  </div>
+                ) : (
+                  filteredRecipes.map(recipe => (
+                    <RecipeCard key={recipe.id} recipe={recipe} />
+                  ))
+                )}
+              </div>
+            )}
           </TabsContent>
         </Tabs>
       </section>
